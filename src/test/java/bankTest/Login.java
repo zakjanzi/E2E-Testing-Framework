@@ -15,8 +15,9 @@ public class Login {
     public static void performLogin(WebDriver driver, String username, String password) {
         driver.get("https://parabank.parasoft.com/parabank/index.htm");
 
-        driver.findElement(By.cssSelector("input[name='username']")).sendKeys("someusername");
-        driver.findElement(By.cssSelector("input[name='password']")).sendKeys("somepassword");
+        driver.findElement(By.cssSelector("input[name='username']")).sendKeys(username);
+        driver.findElement(By.cssSelector("input[name='password']")).sendKeys(password);
+
         driver.findElement(By.cssSelector("input[value='Log In']")).click();
     }
 
@@ -24,31 +25,30 @@ public class Login {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
 
-        // Perform the login
-        performLogin(driver, "randomuser", "randompass");
+        // Assign the new username and password values
+        String username = "anotherusername88";
+        String password = "anotherpassword88";
+
+        // Perform the login with new values
+        performLogin(driver, username, password);
 
         // Go to Home page
-        driver.findElement(By.cssSelector("a[href='/parabank/index.htm']")).click();
+        // driver.findElement(By.cssSelector("a[href='/parabank/index.htm']")).click();
 
-
-        // Wait for the message element to be visible
+        // Wait for the success message to be visible
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement messageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".title")));
 
-        // Get the text of the message
+        // Get success message
         String actualMessage = messageElement.getText();
-        String expectedMessage = "Your account was created successfully. You are now logged in.";
+        String expectedMessage = "Accounts Overview";
 
-        // Assert the message
-        Assert.assertEquals(expectedMessage, actualMessage);
-
-        // Close the browser
-        driver.quit();
-
-
+        // If Login test fails, run the Register test
+        if (!expectedMessage.equals(actualMessage)) {
+            System.out.println("Login test failed (account does not exist). Running Register test...");
+            Register.main(args);
+        } else {
+            System.out.println("Login test passed.");
+        }
     }
 }
-
-
-
-

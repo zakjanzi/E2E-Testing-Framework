@@ -11,7 +11,9 @@ public class OpenNewAccount {
         WebDriver driver = new ChromeDriver();
 
         // Login before proceeding
-        Login.performLogin(driver, "someusername", "somepassword");
+        Login.performLogin(driver, "someusername66", "somepassword66");
+
+        // If login fails, run register with the same credentials as above (usernames reset every hour)
 
         driver.findElement(By.cssSelector("a[href='/parabank/openaccount.htm']")).click();
 

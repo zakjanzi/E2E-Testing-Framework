@@ -30,7 +30,7 @@ public class TransferFunds {
         dropdownFrom.selectByIndex(0);
         Select dropdownTo = new Select(driver.findElement(By.id("toAccountId")));
         // Select the second option
-        dropdownTo.selectByIndex(0);
+        dropdownTo.selectByIndex(1);
         System.out.println("waiting");
         Thread.sleep(2000);
 
